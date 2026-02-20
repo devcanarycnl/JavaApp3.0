@@ -1,12 +1,9 @@
 # Build stage
-FROM eclipse-temurin:8-jdk-alpine AS builder
+FROM maven:3.8.1-openjdk-8-slim AS builder
 WORKDIR /build
 COPY pom.xml .
-COPY mvnw .
-COPY mvnw.cmd .
-COPY .mvn .mvn
 COPY src src
-RUN ./mvnw clean package -DskipTests
+RUN mvn clean package -DskipTests
 
 # Runtime stage
 FROM eclipse-temurin:8-jdk-alpine
